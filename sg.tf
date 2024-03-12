@@ -1,41 +1,28 @@
-
 resource "aws_security_group" "allow_tls" {
-  name   = "allow_tls"
-  vpc_id = "vpc-024bfe9440d1e7ed7"
+  name   = var.sgname            # define this variable
+  vpc_id = var.vpc_id           # define this variable
 
-  ingress {
-    description = "TLS from VPC"
-    from_port   = var.port[0]
-    to_port     = var.port[0]
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-
+  # Ingress rules
+  dynamic "ingress" {
+    for_each = var.port           # define this variable
+    content {
+      description = "TLS from VPC"
+      from_port   = ingress.value   #ingress.value-gave value from (ingress) meaning dynamic block name and (value) taken from for_each = var.port   
+      to_port     = ingress.value
+      protocol    = "tcp"
+      cidr_blocks = ["0.0.0.0/0"]
+    }
   }
-  ingress {
-    description = "TLS from VPC"
-    from_port   = var.port[1]
-    to_port     = var.port[1]
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
 
-  }
-  ingress {
-    description = "TLS from VPC"
-    from_port   = var.port[2]
-    to_port     = var.port[2]
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-
-  }
+  # Egress rule
   egress {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
-
   }
 
   tags = {
-    Name = "allow_tls"
+    Name = "var.sg-tag"              # define this variable
   }
 }
