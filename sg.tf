@@ -27,4 +27,7 @@ resource "aws_security_group" "allow_tls" {
   }
 }
 
-#var.sg-tag{}       var.sgname{}        var.vpc_id{}             var.port{}
+var.sg-tag{}   
+var.sgname{}    
+var.vpc_id{} 
+var.port{}
