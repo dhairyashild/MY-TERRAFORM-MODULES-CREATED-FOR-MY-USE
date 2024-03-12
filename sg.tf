@@ -26,3 +26,5 @@ resource "aws_security_group" "allow_tls" {
     Name = "var.sg-tag"              # define this variable
   }
 }
+
+#var.sg-tag{}       var.sgname{}        var.vpc_id{}             var.port{}
