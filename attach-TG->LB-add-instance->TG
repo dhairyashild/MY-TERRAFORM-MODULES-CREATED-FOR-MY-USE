@@ -1,0 +1,20 @@
+# Define the target group
+resource "aws_lb_target_group" "test" {
+  # ... other configuration for the target group ...
+}
+
+# Create multiple instances
+resource "aws_instance" "test" {
+  count = 3  # Change the count to the desired number of instances
+
+  # ... other configuration for the instance ...
+}
+
+# Attach each instance to the target group
+resource "aws_lb_target_group_attachment" "test_attachment" {
+  count = length(aws_instance.test.*.id)  # Count should match the number of instances
+
+  target_group_arn = aws_lb_target_group.test.arn
+  target_id        = aws_instance.test[count.index].id
+  port             = 80
+}
