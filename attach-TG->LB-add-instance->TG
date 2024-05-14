@@ -18,3 +18,48 @@ resource "aws_lb_target_group_attachment" "test_attachment" {
   target_id        = aws_instance.test[count.index].id
   port             = 80
 }
+######################################################
+#  my code
+
+resource "aws_lb" "test"{
+  name               = 
+  internal           =
+  load_balancer_type = 
+  security_groups    = [aws_security_group.allow_tls.id]
+  subnets            = [aws_subnet.pub_sub_1a.id, aws_subnet.pub_sub_1b.id]
+
+  enable_deletion_protection = false
+}
+resource "aws_lb_target_group" "test" {
+  name     = 
+  port     = 
+  target_type = "instance"                   # add this line
+  protocol = "HTTP"
+  vpc_id   = 
+}
+
+resource "aws_lb_listener" "front_end" {
+  load_balancer_arn = aws_lb.test.arn
+  port              = "80"                   # replace port 443 to 80
+  protocol          = "HTTP"                 #  replace HTTPS TO HTTP
+  # ssl_policy        = "ELBSecurityPolicy-2016-08"                                                           #  comment out
+  # certificate_arn   = "arn:aws:iam::187416307283:server-certificate/test_cert_rab3wuqwgja25ct3n4jdj2tzu4"   #  comment out
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.test.arn
+  }
+}
+
+resource "aws_lb_target_group_attachment" "test" {
+  target_group_arn = 
+  target_id        = aws_instance.jenkin-ec2.id        # add id of instace
+  port             = 
+}
+
+resource "aws_lb_target_group_attachment" "test1" {
+  target_group_arn =
+  target_id        = aws_instance.j.id                  # add id of instace
+  port             = 
+}
+
