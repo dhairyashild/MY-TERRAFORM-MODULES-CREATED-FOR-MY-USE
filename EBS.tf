@@ -27,7 +27,7 @@ resource "aws_ebs_volume" "example" {
 }
 
 resource "aws_volume_attachment" "example" {
-  device_name = "/dev/sdf"       #n this configuration, /dev/sdf is the device name you provide in Terraform, but within the instance, it might be recognized as /dev/xvdf. The actual device name might be slightly different depending on the AMI and the instance type, but /dev/sdf is a common choice for specifying an EBS volume attachment in AWS. By following these steps, you've created an EBS volume, attached it to an EC2 instance, and prepared it for use.                   
+  device_name = "/dev/sdf"       # In this configuration, /dev/sdf is the device name you provide in Terraform, but within the instance, it might be recognized as /dev/xvdf. The actual device name might be slightly different depending on the AMI and the instance type, but /dev/sdf is a common choice for specifying an EBS volume attachment in AWS. By following these steps, you've created an EBS volume, attached it to an EC2 instance, and prepared it for use.                   
   volume_id   = aws_ebs_volume.example.id
   instance_id = aws_instance.example.id
 }
@@ -51,9 +51,10 @@ sudo mount /dev/xvdf /mnt/myebs
 Update /etc/fstab for Persistent Mount:
 echo '/dev/xvdf /mnt/myebs ext4 defaults,nofail 0 2' | sudo tee -a /etc/fstab
 
-
-
-
+# echo '/dev/xvdf /mnt/myebs ext4 defaults,nofail 0 2' | sudo tee -a /etc/fstab
+# explain and why needed
+# ChatGPT
+# The /etc/fstab file in a Linux system contains information about filesystems and is used to automatically mount these filesystems at boot. Updating /etc/fstab is crucial for ensuring that your EBS volume is mounted automatically each time the EC2 instance is restarted.
 
 
 
