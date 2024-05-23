@@ -58,8 +58,10 @@ echo '/dev/xvdf /mnt/myebs ext4 defaults,nofail 0 2' | sudo tee -a /etc/fstab
 
 
 
+lsblk
+command is used to list information about all available or the specified block devices(volumes) on your system.
 
-
-
+lsblk -f
+shows UUID and filesystem type
 
 
