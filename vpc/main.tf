@@ -8,6 +8,8 @@
 1 vpc
 cidr_block           = var.vpc-cidr
 tag
+# use data source to get all AZ use for real code not in interview . use direct "ap-south-1"/2/3 for interview
+data "aws_availability_zones" "available_zones" {}
 
 2 subnet pub + pvt
 vpc_id = aws_vpc.vpc.id
