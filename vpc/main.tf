@@ -15,8 +15,8 @@ data "aws_availability_zones" "available_zones" {}
 vpc_id = aws_vpc.vpc.id
 cidr_block              = var.public-sub-az1-cidr
 availability_zone       = data.aws_availability_zones.available_zones.names[0]
-map_public_ip_on_launch = true         or  map_public_ip_on_launch = flase      = as per public subnet true and pvt false  
-### u add this above line 
+map_public_ip_on_launch = true  / flase  --->Bydefault FALSE so as per public subnet true and pvt false  
+### u add this above line     ### only string la " " mde liha   ### boolean / single number/ data fetch karat asel trihi lagat nhi " "
 tags 
 
 3 route table  2 banava pub and pvt
