@@ -1,0 +1,50 @@
+Here are simple examples of Terraform provisioners for various types:
+
+1. local-exec Provisioner---Executes a command on the local machine running Terraform.
+
+resource "aws_instance" "example" {
+  ami           = "ami-0c55b159cbfafe1f0"
+  instance_type = "t2.micro"
+
+  provisioner "local-exec" {
+    command = "echo ${self.public_ip} > ip_address.txt"
+  }
+}
+2. remote-exec Provisioner---Executes commands on the remote resource created by Terraform (usually requires SSH).
+
+resource "aws_instance" "example" {
+  ami           = "ami-0c55b159cbfafe1f0"
+  instance_type = "t2.micro"
+
+  connection {
+    type        = "ssh"
+    user        = "ubuntu"
+    private_key = file("~/.ssh/id_rsa")
+    host        = self.public_ip
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "sudo apt-get update",
+      "sudo apt-get install -y nginx"
+    ]
+  }
+}
+3. file Provisioner---Uploads a file to a remote resource.
+
+resource "aws_instance" "example" {
+  ami           = "ami-0c55b159cbfafe1f0"
+  instance_type = "t2.micro"
+
+  connection {
+    type        = "ssh"
+    user        = "ubuntu"
+    private_key = file("~/.ssh/id_rsa")
+    host        = self.public_ip
+  }
+
+  provisioner "file" {
+    source      = "local-script.sh"
+    destination = "/tmp/remote-script.sh"
+  }
+}
