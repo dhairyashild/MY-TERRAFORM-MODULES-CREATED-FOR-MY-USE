@@ -10,3 +10,24 @@ correct---var ghal
   tags = {
     Name = "${var.projectname}-pub-sub-1a"
   }
+
+
+
+2  EC2 CODE AND SOLVED ERROR
+
+resource "aws_instance" "web" {
+  ami           = "078264b8ba71bc45e"
+  instance_type = "t2.micro"
+associate_public_ip_address= true
+  tags = {
+    Name = "HelloWorld"
+  }
+    user_data= <<-EOF                          ### WRONG =  <<-spaceEOF
+#!/bin/bash    
+sudo apt-get update -y
+sudo apt-get install apache2 -y
+sudo systemctl start apache2 
+EOF                                           ### WRONG =space space EOF-- CORRECT no space before EOF
+  
+}
+
