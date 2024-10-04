@@ -1,0 +1,12 @@
+1
+ tags = {
+    Name = "${projectname}-pvt-sub-1a"
+  }
+
+error---  6:     Name = "${projectname}-pub-sub-1a"
+│ A reference to a resource type must be followed by at least one attribute access, specifying resource name.
+
+correct---var ghal
+  tags = {
+    Name = "${var.projectname}-pub-sub-1a"
+  }
